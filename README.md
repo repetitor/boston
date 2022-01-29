@@ -68,3 +68,9 @@ then:
 ```
 NGINX_HOST_HTTP_PORT=800
 ```
+
+```shell
+docker tag laradock_nginx:latest repetitor202/nginx:1.21.6-laradock-alpine3.15.0
+docker login
+docker push repetitor202/nginx:1.21.6-laradock-alpine3.15.0
+```
