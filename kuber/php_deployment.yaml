@@ -22,7 +22,10 @@ spec:
           # image: laravel-php
           # imagePullPolicy: Never
           # image: repetitor202/php-fpm:7.4.27-laradock-debian11
-          image: repetitor202/for-kube:1
+#          image: repetitor202/for-kube:1
+#          image: repetitor202/for-kube-fpm-cp-laravel:latest
+#          image: repetitor202/for-kube-fpm-cp-laravel:vendor
+          image: repetitor202/for-kube-fpm-cp-laravel:echo-hi-from-kuber
           volumeMounts:
             - name: code
               mountPath: /code
