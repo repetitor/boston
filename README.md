@@ -3,12 +3,19 @@
 ```shell
 cd laradock
 cp .env.example .env
-docker-compose up -d nginx mariadb
-docker-compose exec --user=laradock workspace bash
-# composer install
-# cp .env.example .env
-# php artisan key:generate
-# php artisan test
+
+#docker-compose -- up -d -- nginx mariadb && docker-compose -- exec --user=laradock workspace composer install \
+#  && cp .env.example .env && php artisan key:generate && php artisan test
+docker-compose -- up -d -- nginx mariadb && docker-compose -- exec --user=laradock -- workspace composer install \
+  && cp .env.example .env
+docker-compose -- exec --user=laradock -- workspace php artisan key:generate
+docker-compose -- exec --user=laradock -- workspace  php artisan test
+docker-compose -- exec --user=laradock -- workspace  sed -i 's@DB_HOST=127.0.0.1@DB_HOST=mariadb@' .env
+docker-compose -- exec --user=laradock -- workspace  sed -i 's@DB_DATABASE=laravel@DB_DATABASE=default@' .env
+docker-compose -- exec --user=laradock -- workspace  sed -i 's@DB_USERNAME=root@DB_USERNAME=default@' .env
+docker-compose -- exec --user=laradock -- workspace  sed -i 's@DB_PASSWORD=@DB_PASSWORD=secret@' .env
+# docker-compose -- up -d nginx mariadb && docker-compose -- exec --user=laradock -- workspace bash
+# composer install && cp .env.example .env && php artisan key:generate && php artisan test
 # exit
 # docker-compose stop
 ```
