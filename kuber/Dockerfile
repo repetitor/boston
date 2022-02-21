@@ -1,4 +1,4 @@
-FROM repetitor202/php-fpm:7.4.27-laradock-debian11
+FROM repetitor202/laradock-boston_php-fpm:211022-xdebug2
 #FROM repetitor202/workspace:laradock-ubuntu20.04
 
 # RUN apt-get update

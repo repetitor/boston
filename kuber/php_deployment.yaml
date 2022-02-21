@@ -25,7 +25,8 @@ spec:
 #          image: repetitor202/for-kube:1
 #          image: repetitor202/for-kube-fpm-cp-laravel:latest
 #          image: repetitor202/for-kube-fpm-cp-laravel:vendor
-          image: repetitor202/for-kube-fpm-cp-laravel:echo-hi-from-kuber
+#          image: repetitor202/for-kube-fpm-cp-laravel:echo-hi-from-kuber
+          image: repetitor202/laradock-boston_php-fpm:211022-xdebug2-laravel-app
           volumeMounts:
             - name: code
               mountPath: /code
