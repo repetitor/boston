@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  smp:
+#    restart: unless-stopped
+    command: npm run serve
+    image: node:alpine
+    container_name: node-container
+    working_dir: /app
+    volumes:
+      - ${NODE_APP_PATH}:/app
+    ports:
+      - ${NODE_APP_PORT}:8080
