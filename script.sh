@@ -4,7 +4,7 @@ Help()
 {
   echo "Usage ./script.sh [OPTION]"
   echo
-  echo "Syntax: ./script.sh [-b|e|h|n|q|s|u]"
+  echo "Syntax: ./script.sh [-b|c|d|e|h|n|q|s|u]"
   echo "options:"
   echo "-b     Build Laravel-environment (build mariadb, nginx, php-fpm, workspace)."
   echo "-e     Prepare Laradock .env file."
@@ -23,14 +23,44 @@ PrepareLaradockEnvFile()
 
   cp  "$pathProject"/.env.example "$pathProject"/.env
 
-  sed -i 's@APP_CODE_PATH_HOST=../@APP_CODE_PATH_HOST=../../_support/boston-laravel/laravel/@' "$pathProject"/.env
-  sed -i 's@DATA_PATH_HOST=~/.laradock/data@DATA_PATH_HOST=~/.laradock/data-boston@' "$pathProject"/.env
+#  PrepareLaradockEnvFileSetBuildParams
   sed -i 's@COMPOSE_PROJECT_NAME=laradock@COMPOSE_PROJECT_NAME=laradock-boston@' "$pathProject"/.env
-  sed -i 's@PHP_IDE_CONFIG=serverName=laradock@PHP_IDE_CONFIG=serverName=laradock-boston@' "$pathProject"/.env
   sed -i 's@WORKSPACE_INSTALL_PHPREDIS=true@WORKSPACE_INSTALL_PHPREDIS=false@' "$pathProject"/.env
   sed -i 's@WORKSPACE_INSTALL_MEMCACHED=true@WORKSPACE_INSTALL_MEMCACHED=false@' "$pathProject"/.env
   sed -i 's@WORKSPACE_INSTALL_XDEBUG=false@WORKSPACE_INSTALL_XDEBUG=true@' "$pathProject"/.env
-  sed -i 's@PHP_FPM_INSTALL_XDEBUG=false@PHP_FPM_INSTALL_XDEBUG=true@' "$pathProject"/.env
+  sed -i 's@PHP_FPM_XDEBUG_PORT=9003@PHP_FPM_XDEBUG_PORT=9013@' "$pathProject"/.env
+
+#  PrepareLaradockEnvFileSetUpParams
+  sed -i 's@APP_CODE_PATH_HOST=../@APP_CODE_PATH_HOST=../../_support/boston-laravel/laravel/@' "$pathProject"/.env
+  sed -i 's@DATA_PATH_HOST=~/.laradock/data@DATA_PATH_HOST=~/.laradock/data-boston@' "$pathProject"/.env
+  sed -i 's@PHP_IDE_CONFIG=serverName=laradock@PHP_IDE_CONFIG=serverName=laradock-boston@' "$pathProject"/.env
+  sed -i 's@PHP_FPM_XDEBUG_PORT=9003@PHP_FPM_XDEBUG_PORT=9013@' "$pathProject"/.env
+}
+
+PrepareLaradockEnvFileSetBuildParams()
+{
+  pathCurrentScript=$(dirname "$0")
+  pathProject="$pathCurrentScript"/laradock
+
+  cp  "$pathProject"/.env.example "$pathProject"/.env
+
+  sed -i 's@COMPOSE_PROJECT_NAME=laradock@COMPOSE_PROJECT_NAME=laradock-boston@' "$pathProject"/.env
+  sed -i 's@WORKSPACE_INSTALL_PHPREDIS=true@WORKSPACE_INSTALL_PHPREDIS=false@' "$pathProject"/.env
+  sed -i 's@WORKSPACE_INSTALL_MEMCACHED=true@WORKSPACE_INSTALL_MEMCACHED=false@' "$pathProject"/.env
+  sed -i 's@WORKSPACE_INSTALL_XDEBUG=false@WORKSPACE_INSTALL_XDEBUG=true@' "$pathProject"/.env
+  sed -i 's@PHP_FPM_XDEBUG_PORT=9003@PHP_FPM_XDEBUG_PORT=9013@' "$pathProject"/.env
+}
+
+PrepareLaradockEnvFileSetUpParams()
+{
+  pathCurrentScript=$(dirname "$0")
+  pathProject="$pathCurrentScript"/laradock
+
+  cp  "$pathProject"/.env.example "$pathProject"/.env
+
+  sed -i 's@APP_CODE_PATH_HOST=../@APP_CODE_PATH_HOST=../../_support/boston-laravel/laravel/@' "$pathProject"/.env
+  sed -i 's@DATA_PATH_HOST=~/.laradock/data@DATA_PATH_HOST=~/.laradock/data-boston@' "$pathProject"/.env
+  sed -i 's@PHP_IDE_CONFIG=serverName=laradock@PHP_IDE_CONFIG=serverName=laradock-boston@' "$pathProject"/.env
   sed -i 's@PHP_FPM_XDEBUG_PORT=9003@PHP_FPM_XDEBUG_PORT=9013@' "$pathProject"/.env
 }
 
@@ -102,10 +132,14 @@ Stop()
   docker-compose -f "$pathProject"/docker-compose.yml --env-file "$pathProject"/.env -- stop
 }
 
-while getopts ":behnqsu" option; do
+while getopts ":bcdehnqsu" option; do
    # shellcheck disable=SC2220
    case $option in
       b) BuildLaravelEnvironment
+         exit;;
+      c) PrepareLaradockEnvFileSetBuildParams
+         exit;;
+      d) PrepareLaradockEnvFileSetUpParams
          exit;;
       e) PrepareLaradockEnvFile
          exit;;
