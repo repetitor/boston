@@ -18,6 +18,7 @@ RemoveArtefacts()
   rm -rf  "$pathCurrentScript"/larakube/
   rm -rf  "$pathCurrentScript"/laravel/
   sudo rm -rf  "$pathCurrentScript"/minilaradock/
+  rm -rf  "$pathCurrentScript"/sandbox/
 }
 
 while getopts ":hr" option; do
