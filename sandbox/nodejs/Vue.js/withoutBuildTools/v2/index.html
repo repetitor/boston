@@ -1,0 +1,9 @@
+<!-- index.html -->
+<script src="https://unpkg.com/vue@3"></script>
+<div id="app">{{ message }}</div>
+<script type="module">
+    // import { createApp } from 'vue'
+    import MyComponent from './my-component.js'
+
+    Vue.createApp(MyComponent).mount('#app')
+</script>
