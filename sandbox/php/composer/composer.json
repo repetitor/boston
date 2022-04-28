@@ -1,0 +1,20 @@
+{
+  "name": "repetitor202/try",
+  "description": "try",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Viktar Akulenka",
+      "email": "repetitor202@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src",
+      "Repetitor202\\": "src/Repetitor202"
+    }
+  },
+  "require": {
+    "nesbot/carbon": "^2.57"
+  }
+}
