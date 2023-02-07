@@ -36,3 +36,13 @@ def ordinary():
 
 
 ordinary()
+
+import pandas as pd
+import seaborn as sns
+from google.colab import drive
+from sklearn import tree
+drive.mount('/content/drive')
+
+base = '/content/drive/MyDrive/Colab Notebooks/stepik/126333-intro-data-analyze/'
+df = pd.read_csv(base + 'students.csv', delimiter=',')
+df_test = pd.read_csv(base + 'students_test.csv', delimiter=',')
