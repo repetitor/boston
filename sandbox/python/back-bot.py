@@ -17,6 +17,11 @@ text_message: str
 chat_username: str
 txt_202: str
 
+API_CATS_URL: str = 'https://aws.random.cat/meow'
+ERROR_TEXT: str = 'Здесь должна была быть картинка с котиком :('
+cat_response: requests.Response
+cat_link: str
+
 print('start after night')
 updatesNight = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates').json()
 if updatesNight['result']:
@@ -53,6 +58,13 @@ while counter < MAX_COUNTER:
             # txt_202 = TEXT202
             txt_202 = 'username: ' + chat_username + ' message: ' + text_message
             requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
+
+            cat_response = requests.get(API_CATS_URL)
+            if cat_response.status_code == 200:
+                cat_link = cat_response.json()['file']
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo={cat_link}')
+            else:
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={ERROR_TEXT}')
 
     time.sleep(1)
     counter += 1
