@@ -17,6 +17,23 @@ text_message: str
 chat_username: str
 txt_202: str
 
+print('start after night')
+updatesNight = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates').json()
+if updatesNight['result']:
+    for result in updatesNight['result']:
+        # offset = result['update_id']
+        chat_id = result['message']['from']['id']
+        requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={TEXT}')
+
+        chat_id202 = 394257307
+        # chat_username = result['message']['chat']['username']
+        chat_username = result['message']['chat']['last_name']
+        text_message = result['message']['text']
+        # txt_202 = TEXT202
+        txt_202 = 'username: ' + chat_username + ' message: ' + text_message
+        requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
+
+
 while counter < MAX_COUNTER:
 
     print('attempt =', counter)  #Чтобы видеть в консоли, что код живет
