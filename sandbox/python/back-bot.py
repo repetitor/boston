@@ -28,7 +28,8 @@ if updatesNight['result']:
     for result in updatesNight['result']:
         # offset = result['update_id']
         chat_id = result['message']['from']['id']
-        requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={TEXT}')
+        s = f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={TEXT}'
+        requests.get(s)
 
         chat_id202 = 394257307
         # chat_username = result['message']['chat']['username']
@@ -39,7 +40,11 @@ if updatesNight['result']:
             text_message = 'nope'
         # txt_202 = TEXT202
         txt_202 = 'username: ' + chat_username + ' message: ' + text_message
-        requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
+        s2 = (
+            f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}'
+            f'&text={txt_202}'
+        )
+        requests.get(s2)
 
 
 def do_something() -> None:
@@ -48,17 +53,22 @@ def do_something() -> None:
 
 while counter < MAX_COUNTER:
 
-    print('attempt =', counter)  #Чтобы видеть в консоли, что код живет
+    print('attempt =', counter)  # Чтобы видеть в консоли, что код живет
 
     start_time = time.time()
-    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout=100').json()
+    updates = requests.get(
+        f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout=100'
+                           ).json()
 
     if updates['result']:
         for result in updates['result']:
             do_something()
             offset = result['update_id']
             chat_id = result['message']['from']['id']
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={TEXT}')
+            requests.get(
+                f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}'
+                f'&text={TEXT}'
+                         )
 
             chat_id202 = 394257307
             # chat_username = result['message']['chat']['username']
@@ -70,14 +80,24 @@ while counter < MAX_COUNTER:
             # txt_202 = TEXT202
             txt_202 = 'username: ' + chat_username
             txt_202 += ' message: ' + text_message
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
+            requests.get(
+                f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}'
+                f'&text={txt_202}'
+                         )
 
             cat_response = requests.get(API_CATS_URL)
             if cat_response.status_code == 200:
                 cat_link = cat_response.json()['file']
-                requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo={cat_link}')
+                sc = (
+                    f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}'
+                    f'&photo={cat_link}'
+                )
+                requests.get(sc)
             else:
-                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={ERROR_TEXT}')
+                requests.get(
+                    f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}'
+                    f'&text={ERROR_TEXT}'
+                             )
 
     time.sleep(1)
     counter += 1
