@@ -33,20 +33,25 @@ if updatesNight['result']:
         chat_id202 = 394257307
         # chat_username = result['message']['chat']['username']
         chat_username = result['message']['chat']['last_name']
-        text_message = result['message']['text']
+        if 'text' in result['message']:
+            text_message = result['message']['text']
+        else:
+            text_message = 'nope'
         # txt_202 = TEXT202
         txt_202 = 'username: ' + chat_username + ' message: ' + text_message
         requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
 
+
 def do_something() -> None:
     print('Был апдейт')
+
 
 while counter < MAX_COUNTER:
 
     print('attempt =', counter)  #Чтобы видеть в консоли, что код живет
 
     start_time = time.time()
-    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout=5').json()
+    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout=100').json()
 
     if updates['result']:
         for result in updates['result']:
@@ -58,9 +63,13 @@ while counter < MAX_COUNTER:
             chat_id202 = 394257307
             # chat_username = result['message']['chat']['username']
             chat_username = result['message']['chat']['last_name']
-            text_message = result['message']['text']
+            if 'text' in result['message']:
+                text_message = result['message']['text']
+            else:
+                text_message = 'nope'
             # txt_202 = TEXT202
-            txt_202 = 'username: ' + chat_username + ' message: ' + text_message
+            txt_202 = 'username: ' + chat_username
+            txt_202 += ' message: ' + text_message
             requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id202}&text={txt_202}')
 
             cat_response = requests.get(API_CATS_URL)
